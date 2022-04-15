@@ -1,0 +1,8 @@
+<a href="/comments/<%=@comment.id%>/edit">Edit</a> | 
+<form action="/comments/<%=@comment.id%>/delete" method="post">
+    <input value="delete" id="hidden" type="hidden" name="_method">
+    <input type="submit" value="Delete">
+</form> |
+<a href="/forms">Forms</a>
+
+<%= @comment.text %>

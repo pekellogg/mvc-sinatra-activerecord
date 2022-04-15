@@ -1,0 +1,7 @@
+Welcome to Employer Audit!
+<% if logged_in? %>
+    Welcome, <%=current_user.username%>
+    <a href="/forms">Browse Forms</a> | <a href="/logout">Log Out</a>
+<% else %>
+    <a href="/signup">Create Account</a> | <a href="/login">Login</a>
+<% end %>

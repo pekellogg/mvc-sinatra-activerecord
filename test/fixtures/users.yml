@@ -1,0 +1,12 @@
+# fixtures reference sources
+
+# syntax
+# https://tool.oschina.net/uploads/apidocs/rails/classes/ActiveRecord/Fixtures.html
+# https://www.rubydoc.info/gems/activerecord/1.4.0/Fixtures
+# https://api.rubyonrails.org/v2.3.8/classes/Fixtures.html
+# https://api.rubyonrails.org/v6.0.4.4/classes/ActiveRecord/FixtureSet.html
+
+# blog implementation examples
+# https://human-se.github.io/rails-demos-n-deets-2020/demo-test-fixtures/
+# https://brandonhilkert.com/blog/using-rails-fixtures-to-seed-a-database/
+# https://www.danott.co/posts/seeding-development-with-test-fixtures/
