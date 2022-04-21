@@ -70,5 +70,4 @@ class CommentsController < ApplicationController
             redirect '/login'
         end
     end
-
 end

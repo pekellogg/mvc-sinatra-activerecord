@@ -6,6 +6,7 @@ class CreateForms < ActiveRecord::Migration[6.0]
       t.string :report_date
       t.string :doc
       t.string :doc_description
+      t.belongs_to :company
     end
   end
 end

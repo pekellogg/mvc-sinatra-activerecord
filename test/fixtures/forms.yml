@@ -1,0 +1,12 @@
+# # belongs_to
+# ### in pirates.yml
+
+# reginald:
+#   name: Reginald the Pirate
+#   monkey: george
+
+# ### in monkeys.yml
+
+# george:
+#   name: George the Monkey
+#   pirate: reginald

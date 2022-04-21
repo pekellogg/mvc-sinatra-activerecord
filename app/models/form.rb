@@ -1,4 +1,11 @@
+require 'activerecord-import'
+
 class Form < ActiveRecord::Base
     has_many :comments
-    belongs_to :company
+    has_many :users, through: :comments #(maybe?)
+    # belongs_to :company
+
+    def self.ar_import_forms(collection)
+        self.import collection
+    end
 end
