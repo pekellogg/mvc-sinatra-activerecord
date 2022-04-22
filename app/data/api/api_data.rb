@@ -5,13 +5,19 @@ require 'net/http'
 require 'json'
 
 module APIData
+    def self.get_data
+        # get & create Companies
+        APIData.get_companies if Company.all.count == 0
+        # get & create Forms
+        APIData.get_forms if !Form.all
+    end
+
     def self.get_companies
         self::GetCompaniesTableData.all_companies
     end
 
     def self.get_forms
-        # Company.connection.select_all("SELECT * FROM companies WHERE cik in '#{Company::CIKS.join(",")}'").to_a
-        Company::CIKS.each do |i|
+        Company::MAANG_CIKS.each do |i|
             self::GetFormsTableData.forms_by_cik(i)
         end
     end

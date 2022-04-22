@@ -1,10 +1,11 @@
-<h2>Welcome to Employer Audit!</h2>
-
+<h1>Welcome to MAANG Employers Audit.</h1>
+<p id="n">(n).</p>
+<p id="intro">A web application that leverages the SEC Form filings history of MAANG companies' activities for prospective employment research.</p>
 <br>
 
 <% if logged_in? %>
     Welcome, <%=current_user.username%>
-    <a href="/forms">Browse Forms</a> | <a href="/logout">Log Out</a>
+    <h2><a href="/forms">Community Feed</a> | <a href="/logout">MAANG Companies Search</a> | <a href="/logout">Logout</a></h2>
 <% else %>
-    <a href="/signup">Create Account</a> | <a href="/login">Login</a>
+    <h2><a href="/signup">Create Account</a> | <a href="/login">Login</a></h2>
 <% end %>

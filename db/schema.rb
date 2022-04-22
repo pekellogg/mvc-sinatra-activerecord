@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_15_032415) do
+ActiveRecord::Schema.define(version: 2022_04_20_223230) do
 
   create_table "comments", force: :cascade do |t|
     t.text "text"
@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 2022_04_15_032415) do
     t.string "report_date"
     t.string "doc"
     t.string "doc_description"
+    t.integer "company_id"
+    t.string "uri"
+    t.index ["company_id"], name: "index_forms_on_company_id"
   end
 
   create_table "users", force: :cascade do |t|

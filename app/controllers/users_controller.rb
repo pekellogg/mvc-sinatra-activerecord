@@ -1,39 +1,49 @@
 class UsersController < ApplicationController
     get '/signup' do
-      !logged_in? ? (erb :'/users/new') : (redirect '/forms')
+      if !logged_in?
+        erb :'/users/new'
+      else
+        redirect '/companies'
+      end
     end
 
     post "/signup" do
       @user = User.new(params)
       if @user.save && @user.authenticate(params[:password])
-        session[:user_id] = @user.id
-        redirect '/forms'
+        @session = session
+        @session[:user_id] = @user.id
+        redirect '/companies'
       else
         redirect '/signup'
       end
     end
 
     get '/login' do
-      !logged_in? ? (erb :'/users/login') : (redirect '/forms')
+      if !logged_in?
+        erb :'/users/login'
+      else
+        redirect '/companies'
+      end
     end
 
     post '/login' do
-      if @user = User.find_by(username: params[:username])&.authenticate(params[:password])
-        session[:user_id] = @user.id
-        redirect '/forms'
+      if @user = User.find_by(username: params[:email])&.authenticate(params[:password])
+        @session = session
+        @session[:user_id] = @user.id
+        redirect '/companies'
       else
         redirect '/signup'
       end
     end
 
-    get '/users/:slug' do
-      @user = User.find_by_slug(params[:slug])
-      erb :'users/show'
-    end
+    # get '/users/:slug' do
+    #   @user = User.find_by_slug(params[:slug])
+    #   erb :'users/show'
+    # end
 
     get '/logout' do
       if logged_in?
-        session.clear
+        @session.clear
         redirect '/login'
       else
         redirect '/'

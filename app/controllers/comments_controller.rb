@@ -10,11 +10,11 @@ class CommentsController < ApplicationController
     end
 
     get '/comments/new' do
-        logged_in? ? (erb :'/tweets/new') : (redirect '/login')
+        logged_in? ? (erb :'/comments/new') : (redirect '/login')
     end
 
     get '/comments/:id' do
-        logged_in? ? ((@tweet = Tweet.find(params[:id])) && (erb :'/tweets/show')) : (redirect '/login')
+        logged_in? ? ((@tweet = Tweet.find(params[:id])) && (erb :'/comments/show')) : (redirect '/login')
     end   
 
     post '/comments' do

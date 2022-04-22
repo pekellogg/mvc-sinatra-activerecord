@@ -2,9 +2,9 @@ require_relative '../../config/environment'
 
 class ApplicationController < Sinatra::Base
   configure do
+    set :views, 'app/views'
     enable :sessions
     set :sessions_secret, 'y7vbK"m;*8vsSH_c'
-    set :views, 'app/views'
   end
 
   get '/' do
