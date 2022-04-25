@@ -1,4 +1,18 @@
-Please choose from the following MAANG companies:
+<h1>Choose from the following MAANG companies</h1>
 <% @companies.each do |c| %>
-    <%= c.title %>
+    <p><%= "#{c.ticker}: #{c.title}" %></p>
+    <div class="company-forms-section">
+    <% c.forms.each do |f| %>
+        <% if !f.doc_description.empty? && !f.report_date.empty? %>
+            <%= "#{f.doc_description} filed on: #{f.report_date}" %>
+        <% end %>
+        <br>
+
+        <%= "See full details: #{f.uri}" if f.uri %>
+
+        <br>
+        <br>
+
+        <% end %>
+    </div>
 <% end %>

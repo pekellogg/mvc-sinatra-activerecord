@@ -9,7 +9,7 @@ module APIData
         # get & create Companies
         APIData.get_companies if Company.all.count == 0
         # get & create Forms
-        APIData.get_forms if !Form.all
+        APIData.get_forms if Form.all.empty?
     end
 
     def self.get_companies

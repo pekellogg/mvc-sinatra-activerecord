@@ -8,10 +8,12 @@ module APIData::GetCompaniesTableData
         companies = []
         body.each do |i, company|
             container = []
-            container << company['cik_str']
-            container << company['ticker']
-            container << company['title']
-            companies << container
+            if Company::MAANG_CIKS.include?(company['cik_str'].to_i)
+                container << company['cik_str']
+                container << company['ticker']
+                container << company['title']
+                companies << container
+            end
         end
 
         # pass columns and values to ActiveRecord #import to create ciks table
