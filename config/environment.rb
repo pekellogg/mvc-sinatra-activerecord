@@ -5,4 +5,4 @@ require_all './app'
 
 ActiveRecord::Base.establish_connection(ENV['SINATRA_ENV'].to_sym)
 
-APIData.get_data
+# APIData.get_data
