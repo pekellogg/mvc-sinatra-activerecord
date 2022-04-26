@@ -4,12 +4,8 @@ class CompaniesController < ApplicationController
     get '/companies' do
         if logged_in?
             @user = current_user 
-            companies = Company.all
-            @companies = companies.sort
-            @companies.each do |c|
-                binding.pry
-                c.forms.class.group("report_date").order('report_date desc')
-            end
+            @companies = Company.sorted_companies
+            Company.all_forms_msgs(@companies)
             erb :'/companies/index'
         else
             redirect '/login'

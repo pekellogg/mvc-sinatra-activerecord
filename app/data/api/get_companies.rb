@@ -9,10 +9,12 @@ module APIData::GetCompaniesTableData
         body.each do |i, company|
             container = []
             if Company::MAANG_CIKS.include?(company['cik_str'].to_i)
-                container << company['cik_str']
-                container << company['ticker']
-                container << company['title']
-                companies << container
+                if company['ticker'] != 'GOOG'
+                    container << company['cik_str']
+                    container << company['ticker']
+                    container << company['title']
+                    companies << container
+                end
             end
         end
 
