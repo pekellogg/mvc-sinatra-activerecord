@@ -7,6 +7,27 @@
   </head>
 
   <body>
+    <nav>
+      <div>
+        <% if !logged_in? %>
+          <a href="/signup">Create Account</a> | <a href="/login">Login</a>
+        <% else %>
+          <a href="/">Home</a> | <a href="/companies">MAANG Companies Search</a> | <a href="/logout">Logout</a>
+        <% end %>
+      </div>
+    </nav>
+
+    <br>
+
+    <% if current_user %>
+      Hi, <%= current_user.username %> ~
+    <% end %>
+
+
+    <br>
+    <br>
+    
+
     <%= yield %>
   </body>
 

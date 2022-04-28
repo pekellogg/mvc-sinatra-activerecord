@@ -1,3 +1,22 @@
-p#intro {font-style: oblique;}
+p#intro {
+    font-style: oblique;
+}
 
-/*👉div.company-forms-section {}👈*/
+div.forms-container {
+    background-color: #C0C0C0;
+}
+
+nav div {
+    width: 98%;
+    height: 20px;
+    background-color: #D3D3D3;
+    border: 3px solid 	#909090;
+    border-radius: 10px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+input[type=text]#edit {
+    width: 200px;
+    height: 10em;
+}

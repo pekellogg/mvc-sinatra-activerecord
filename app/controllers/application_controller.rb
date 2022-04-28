@@ -1,10 +1,12 @@
 require_relative '../../config/environment'
+require 'rack-flash'
 
 class ApplicationController < Sinatra::Base
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
     use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'y7vbK\"m;*8vsSH_c'
+    use Rack::Flash
   end
 
   get '/' do

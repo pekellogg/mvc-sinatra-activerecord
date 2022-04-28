@@ -24,6 +24,9 @@ module APIData::GetFormsTableData
         body = JSON.parse(response.body) if response.code == 200
         @accession_nos = body['filings']['recent']['accessionNumber']
         @report_dates = body['filings']['recent']['reportDate']
+
+        self.reformat_report_dates(@report_dates)
+
         @docs = body['filings']['recent']['primaryDocument']
         @doc_descs = body['filings']['recent']['primaryDocDescription']
     end
@@ -59,6 +62,18 @@ module APIData::GetFormsTableData
                 if form.cik == company.cik
                     company.forms << form
                 end
+            end
+        end
+    end
+
+    private
+    # re-format @report_dates to MM/DD/YYYY
+    def self.reformat_report_dates(report_dates)
+        report_dates.map! do |date| 
+            if !date.empty?
+                Date.strptime(date.split("-").join, '%Y%m%d').strftime("%m/%d/%Y")
+            else
+                date
             end
         end
     end

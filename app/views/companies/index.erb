@@ -1,7 +1,5 @@
-<h1>Choose from the following MAANG companies</h1>
+<%= flash[:notice] if flash[:notice] %>
+<h1>Choose a MAANG Company</h1>
 <% @companies.each do |c| %>
-    <p><%= "#{c.ticker}: #{c.title}" %></p>
-    <div class="company-forms-section">
-    
-    </div>
+    <h2><a href="/companies/<%=c.id%>"><%= "#{c.ticker}: #{c.title}" %></a></h2>
 <% end %>

@@ -1,0 +1,28 @@
+<h1><%="#{@company.ticker}: #{@company.title}"%></h1>
+<h2><%= @form.doc_description if !@form.doc_description.empty? %></h2>
+<p><a href="<%=@form.uri if @form.uri%>">SEC Form Link</a></p>
+
+<br>
+
+<% @form.comments.each do |comment| %>
+    <a href="/comments/<%=comment.id%>">"<%= comment.text %>"</a>
+
+    <br>
+
+    -<%= @commenters[comment.user_id] if !@form.comments.empty? %>
+
+    <br>
+    <br>
+    <br>
+<% end %>
+
+<h2>Add Comment</h2>
+<form action="/comments" method="post">
+    <input type="hidden" name="form_id" value="<%=@form.id%>">
+    <input type="text" name="text" placeholder="Add comment" maxlength="200" required>
+
+    <br>
+    <br>
+
+    <input type="submit" value="Post">
+</form>

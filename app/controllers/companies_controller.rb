@@ -5,8 +5,18 @@ class CompaniesController < ApplicationController
         if logged_in?
             @user = current_user 
             @companies = Company.sorted_companies
-            Company.all_forms_msgs(@companies)
             erb :'/companies/index'
+        else
+            redirect '/login'
+        end
+    end
+
+    get '/companies/:id' do
+        if logged_in?
+            @user = current_user
+            @company = Company.find{|c|c.id == params[:id].to_i}
+            @forms = @company.forms
+            erb :'/companies/show'
         else
             redirect '/login'
         end

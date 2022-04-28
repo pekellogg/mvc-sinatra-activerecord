@@ -1,33 +1,31 @@
 class CommentsController < ApplicationController
-    get '/comments' do
+    get '/comments/:id' do
         if logged_in?
-            @user = current_user
-            @comments = Comment.all
-            erb :'/comments/index'
+            @comment = Comment.find(params[:id])
+            @form = Form.all.find{|f|f.comments.include?(@comment)}
+            @company = Company.all.find{|c| c.forms.include?(@form)}
+            erb :'/comments/show'
         else
             redirect '/login'
         end
-    end
-
-    get '/comments/new' do
-        logged_in? ? (erb :'/comments/new') : (redirect '/login')
-    end
-
-    get '/comments/:id' do
-        logged_in? ? ((@tweet = Tweet.find(params[:id])) && (erb :'/comments/show')) : (redirect '/login')
     end   
 
     post '/comments' do
-        if params[:content] == " " || params[:content] == ""
-            redirect 'tweets/new'
-        else
-            @user = current_user
-            @comment = Comment.new(content: params[:content], user_id: @user.id)
-            if @comment.valid?
-                @comment.save
-                redirect "/comments/#{@comment.id}"
+        @user = current_user
+        if params[:text] && params[:form_id]
+            if !Comment.all.find{|c|c.text == params[:text] && c.user_id == @user.id}
+                @comment = Comment.new(text: params[:text], user_id: @user.id)
+                if @comment.valid?
+                    @form = Form.all.find{|f| f.id == params[:form_id].to_i}
+                    @company = Company.find{|c|c.forms.include?(@form)}
+                    @form.comments << @comment
+                    flash[:notice] = "Successfully created comment."
+                    erb :'/comments/show'
+                else
+                    redirect '/login'
+                end
             else
-                redirect '/login'
+                erb :'/comments/show'
             end
         end
     end
@@ -38,6 +36,9 @@ class CommentsController < ApplicationController
             @comment = Comment.find(params[:id])
             if @comment.user_id == @user.id
                 erb :'/comments/edit'
+            else
+                flash[:error] = "You don't have permission to do that!"
+                redirect back
             end
         else
             redirect '/login'
@@ -45,29 +46,31 @@ class CommentsController < ApplicationController
     end
 
     patch '/comments/:id' do 
-        if params[:content] == " " || params[:content] == ""
-            redirect back
-        elsif logged_in?
-            @user = current_user
-            @comment = Comment.find(params[:id])
-            @comment.update(content: params[:content])
-            @comment.save if @comment.valid?
-            redirect '/comments'
+        @comment = Comment.find(params[:id])
+        if logged_in?
+            if @comment.user_id == current_user.id
+                @comment.update(text: params[:text])
+                @comment.save if @comment.valid?
+                redirect '/companies'
+            else
+                flash[:error] = "You don't have permission to do that!"
+                redirect back
+            end
         else
             redirect '/login'
         end
     end
 
     delete '/comments/:id/delete' do
-        if logged_in?
-            @user = current_user
-            @comment = Comment.find(params[:id])
-            if @comment.user_id == @user.id
-                @comment.destroy
-                redirect '/comments'
-            end
+        @comment = Comment.find(params[:id])
+        @user = current_user
+        if logged_in? && @comment.user_id == @user.id
+            @comment.destroy
+            flash[:notice] = "Successfully deleted comment."
+            redirect '/companies'
         else
-            redirect '/login'
+            flash[:error] = "You don't have permission to do that!"
+            redirect back
         end
     end
 end
