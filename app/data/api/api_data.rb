@@ -6,10 +6,8 @@ require 'json'
 
 module APIData
     def self.get_data
-        # get & create Companies
-        APIData.get_companies if Company.all.count == 0
-        # get & create Forms
-        APIData.get_forms if Form.all.empty?
+        APIData.get_companies
+        APIData.get_forms
     end
 
     def self.get_companies

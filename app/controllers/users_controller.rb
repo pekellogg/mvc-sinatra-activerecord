@@ -8,18 +8,12 @@ class UsersController < ApplicationController
   end
 
   post "/signup" do
-    if User.valid_username?(params[:username])
-      @user = User.new(params)
-      if @user.save && @user.authenticate(params[:password])
-        session[:user_id] = @user.id
-        flash[:notice] = "Thanks for signing up!"
-        redirect '/companies'
-      else
-        redirect '/signup'
-      end
+    if @user = User.create(params)
+      @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect '/companies'
     else
-      flash[:error] = "Invalid format for username - please don't use special characters or spaces."
-      redirect back
+      redirect '/signup'
     end
   end
 
@@ -33,7 +27,6 @@ class UsersController < ApplicationController
 
   post '/login' do
     if @user = User.find_by(email: params[:email])&.authenticate(params[:password])
-      flash[:notice] = "Welcome back!"
       session[:user_id] = @user.id
       redirect '/companies'
     else
@@ -43,7 +36,6 @@ class UsersController < ApplicationController
 
   get '/logout' do
     if logged_in?
-      flash[:notice] = "Thanks using MAANG Employers Audit!"
       session.clear
       redirect '/login'
     else

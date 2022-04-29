@@ -6,7 +6,7 @@ module APIData::GetFormsTableData
         self.new_forms
     end
 
-    # build request URL x 10 companies total
+    # build request URL
     def self.submissions_uri_builder
         uri = 'https://data.sec.gov/submissions/CIK'
         max = 10
@@ -18,9 +18,9 @@ module APIData::GetFormsTableData
         uri + str + @cik.to_s + '.json'
     end
 
-    # ping API for Company dimensions x 10 companies total
+    # ping API for Company dimensions
     def self.get_forms_by_uri(uri)
-        response = RestClient.get(uri, headers = {'User-Agent': 'peytonkellogg@gmail.com'})
+        response = RestClient.get(uri, headers = {'User-Agent': ENV.fetch("EMAIL")})
         body = JSON.parse(response.body) if response.code == 200
         @accession_nos = body['filings']['recent']['accessionNumber']
         @report_dates = body['filings']['recent']['reportDate']
@@ -31,10 +31,7 @@ module APIData::GetFormsTableData
         @doc_descs = body['filings']['recent']['primaryDocDescription']
     end
 
-    # create collection of objects for import
-    # "The import method can take an array of models.
-    # The attributes will be pulled off from each model by
-    # looking at the columns available on the model." -docs
+    # create collection of objects for ActiveRecord#import => take an array of models
     def self.new_forms
         forms = []
         @accession_nos.each_with_index do |i, index|
@@ -43,6 +40,7 @@ module APIData::GetFormsTableData
         end
         # import objects collection to db
         Form.ar_import_forms(forms)
+        # associate forms to belong_to a company
         self.associate_forms
     end
     
@@ -53,8 +51,8 @@ module APIData::GetFormsTableData
         uri = base + accession_num_no_dashes + prime_doc
     end
 
+    # associate forms to belong_to a company
     def self.associate_forms
-        before = Time.now
         Company::MAANG_CIKS.each do |cik|
             company = Company.all.find{|c|c.cik == cik}
             form_all = Form.all

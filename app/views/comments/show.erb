@@ -1,13 +1,4 @@
-<%= flash[:notice] if flash[:notice] %>
-<%= flash[:error] if flash[:error] %>
-
-
-<br>
-<br>
-
-
 <% if logged_in? %>
-
     <br>
 
     "<%= @comment.text if @comment %>"
@@ -19,44 +10,16 @@
 
     <a href="/comments/<%=@comment.id%>/edit">Edit</a>
 
+
     <br>
+    <br>
+
 
     <form action="/comments/<%=@comment.id%>/delete" method="post">
         <input value="delete" id="hidden" type="hidden" name="_method">
         <input type="submit" value="Delete">
     </form>
-
-
-    <br>
-    <br>
-
-    <% found_form = @company.forms.find{|f|f == @form} %>
-    @company's
-    <br>
-    <% found_form.comments.each do |c| %>
-        <%= c.text %>, id: <%= c.id %>
-        <br>
-        <br>
-    <% end %>
-
-    <br>
-    @form's
-    <% @form.comments.each do |c| %>
-        <br>
-        <%= c.text %>, id: <%= c.id %>
-        <br>
-        <br>
-    <% end %>
     
-    <br>
-    @user's
-    <% current_user.comments.each do |c| %>
-        <br>
-        <%= c.text %>, id: <%= c.id %>
-        <br>
-        <br>
-    <% end %>
-
-
-    
+    <% else %>
+        Please log in first!
 <% end %>

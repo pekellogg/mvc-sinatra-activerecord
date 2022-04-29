@@ -1,7 +1,6 @@
 require 'activerecord-import'
 
 class Company < ActiveRecord::Base
-    # self.primary_key = "cik"
     has_many :forms
 
     #MAANG: meta, amazon, apple, netflix, google
