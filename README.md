@@ -13,7 +13,7 @@ Pull requests welcomed!<br>
 <b>License</b><br>
 This application is available as open source under the terms of the <a href="https://opensource.org/licenses/MIT">MIT License</a>.<br>
 
-<b>Sources Citation</b>
+<b>Sources Citation</b><br>
 U.S. Securities and Exchange Commission<br>
 EDGAR, the Electronic Data Gathering, Analysis, and Retrieval system<br>
 Documentation: https://www.sec.gov/os/accessing-edgar-data<br><br>
