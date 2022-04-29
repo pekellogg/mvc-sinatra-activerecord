@@ -1,0 +1,8 @@
+<% if logged_in? %>
+    <h1>Choose a MAANG Company</h1>
+    <% @companies.each do |c| %>
+        <h2><a href="/companies/<%=c.id%>"><%= "#{c.ticker}: #{c.title}" %></a></h2>
+    <% end %>
+    <% else %>
+        Please log in first!
+<% end %>

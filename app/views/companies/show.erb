@@ -1,0 +1,12 @@
+<h2><%="#{@company.ticker}: #{@company.title}"%></h2>
+<% @forms.each do |form| %>
+    <% if !form.doc_description.empty? && !form.report_date.empty? %>
+        <%= form.report_date %>
+    <% end %>
+
+    <% if !form.doc_description.empty? && !form.report_date.empty? %>
+        <a href="/forms/<%=form.id%>"><%= form.doc_description %></a>
+            <br>
+            <br>
+    <% end %>
+<% end %>

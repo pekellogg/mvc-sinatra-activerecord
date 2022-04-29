@@ -1,0 +1,14 @@
+<% if logged_in? %>
+    <h2>Edit Comment</h2>
+    <form method="post" action="/comments/<%=@comment.id%>">
+        <input value="PATCH" id="hidden" type="hidden" name="_method">
+        <input type="text" name="text" value="<%=@comment.text%>">
+
+        <br>
+        <br>
+
+        <input type="submit" value="Save">
+    </form>
+    <% else %>
+        Please log in first!
+<% end %>
