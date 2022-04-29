@@ -13,18 +13,14 @@ class CommentsController < ApplicationController
     post '/comments' do
         @user = current_user
         if params[:text] && params[:form_id]
-            if !Comment.all.find{|c|c.text == params[:text] && c.user_id == @user.id}
-                @comment = Comment.new(text: params[:text], user_id: @user.id)
-                if @comment.valid?
-                    @form = Form.all.find{|f| f.id == params[:form_id].to_i}
-                    @company = Company.find{|c|c.forms.include?(@form)}
-                    @form.comments << @comment
-                    erb :'/comments/show'
-                else
-                    redirect '/login'
-                end
-            else
+            @comment = Comment.new(text: params[:text], user_id: @user.id)
+            if @comment.valid? && @comment.user_id == @user.id
+                @form = Form.all.find{|f| f.id == params[:form_id].to_i}
+                @company = Company.find{|c|c.forms.include?(@form)}
+                @form.comments << @comment
                 erb :'/comments/show'
+            else
+                redirect '/login'
             end
         end
     end
@@ -35,6 +31,8 @@ class CommentsController < ApplicationController
             @comment = Comment.find(params[:id])
             if @comment.user_id == @user.id
                 erb :'/comments/edit'
+            else
+                redirect '/companies'
             end
         else
             redirect '/login'
@@ -48,7 +46,9 @@ class CommentsController < ApplicationController
                 @comment.update(text: params[:text])
                 @comment.save if @comment.valid?
                 @form = Form.all.find{|f|f.comments.include?(@comment)}
-                redirect "/forms/#{@form.id}"
+                redirect '/companies'
+            else
+                redirect '/companies'
             end
         else
             redirect '/login'
@@ -60,6 +60,8 @@ class CommentsController < ApplicationController
         @user = current_user
         if logged_in? && @comment.user_id == @user.id
             @comment.destroy
+            redirect '/companies'
+        else
             redirect '/companies'
         end
     end
